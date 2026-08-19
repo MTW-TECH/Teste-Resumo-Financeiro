@@ -30,7 +30,7 @@ A tela fica na rota `/levdata/financial-summary` e reúne:
 - 🧾 **Detalhamento** — quebra de custos fixos, variáveis e taxas
 - 🎯 **Indicador de margem**
 - 💡 **Insights automatizados** e **ações rápidas**
-- 🧭 Shell padrão do portal (menu lateral + cabeçalho com seletor de empresa)
+- 🧭 Cabeçalho padrão do portal, com a logo e o usuário logado
 
 Hoje todos os dados exibidos são **estáticos/mockados**:
 
@@ -68,6 +68,13 @@ Abra **http://localhost:3000** — a aplicação já redireciona automaticamente
 - [ ] Conectar ao banco de dados
 - [ ] Substituir os dados estáticos da tela (e os mocks de empresa/usuário) por dados vindos
       dessa API
+
+## 🌟 Bônus (opcional)
+
+- [ ] Deixar a tela **totalmente responsiva**, com uma experiência fluida em qualquer
+      tamanho de tela — celular, tablet, desktop e web
+
+Não é obrigatório, mas é um diferencial muito bem-vindo para quem quiser ir além. ✨
 
 ---
 
