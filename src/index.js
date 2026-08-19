@@ -5,6 +5,7 @@ import { RootStore } from './AppRoot/RootStore';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { createRoot } from 'react-dom/client';
+import { AuthProvider } from './features/authFeatures/AuthContext';
 const container = document.getElementById('root');
 const root = createRoot(container);
 
@@ -15,7 +16,9 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={RootStore}>
-        <App tab="home" />
+        <AuthProvider>
+          <App tab="home" />
+        </AuthProvider>
       </Provider>
     </BrowserRouter>
   </React.StrictMode>

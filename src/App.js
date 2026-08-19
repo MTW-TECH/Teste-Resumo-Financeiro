@@ -10,7 +10,12 @@ import { Route, Routes, Navigate, useLocation } from 'react-router-dom';
 const FinancialSummary = lazy(() =>
   import('./project/dashboards-levdata/FinancialSummary')
 );
+const Login = lazy(() => import('features/authFeatures/Login'));
 
+// AUTH
+import PrivateRoute from 'features/authFeatures/PrivateRoute';
+// ROUTES
+import { LOGIN } from 'Routes';
 // REDUX
 import { recordUserCurrentLanguage } from 'features/userFeatures/userdata.store';
 import { useDispatch } from 'react-redux';
@@ -62,9 +67,14 @@ function App() {
                 }
               >
                 <Routes>
+                  <Route path={LOGIN} element={<Login />} />
                   <Route
                     path="/levdata/financial-summary/*"
-                    element={<FinancialSummary />}
+                    element={
+                      <PrivateRoute>
+                        <FinancialSummary />
+                      </PrivateRoute>
+                    }
                   />
                   <Route
                     path="*"

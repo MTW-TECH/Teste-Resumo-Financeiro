@@ -1,3 +1,6 @@
+//==================AUTH ROUTES=======================//
+export const LOGIN = '/login';
+
 //==================PORTAL ROUTES=======================//
 export const PORTALHOME = '/';
 export const PROFILE = '/perfil';
