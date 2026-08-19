@@ -1,0 +1,136 @@
+.mf-table-mask-expanded {
+  display: none;
+  cursor: pointer;
+  background: #FFFFFF;
+  z-index: 20;
+  border: 1px solid #c4c4c4;
+  border-radius: 5px;
+  padding: 8px 10px;
+  white-space: nowrap; /* wrap: 'no-wrap' */
+  max-width: 680px;
+  overflow-x: auto;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  column-gap: 8px;
+  color: #222222;
+}
+
+.mf-table-mask-off {
+  display: none;
+}
+
+.mf-table-mask-shrunken {
+  display: block;
+}
+
+.mf-table-mask-container:hover > .mf-table-mask-expanded {
+  display: flex;
+}
+
+.mf-table-mask-container:hover > .mf-table-mask-shrunken {
+  display: none;
+}
+
+.expandButton {
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #ffffff;
+  padding: 1px 1px 1px 1px;
+  height: 14px;
+  width: 15px;
+  color: purple;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+
+.expandButton:hover, .recoilButton:hover {
+  border: 1px solid #ccc;
+  background-color: purple;
+  color: white;
+}
+
+.detailsButtonVoid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  text-decoration: none;
+  background-color: #D1D1D1;
+  color:#555;
+  padding: 4px 0px;
+  border-radius: 6px;
+  min-width: 25px;
+  max-width: 25px;
+  min-height: 24px;
+  max-height: 24px;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 18px;
+  text-transform: none;
+}
+
+.float-options-container {
+  position: fixed;
+  left: 44%;
+  bottom: 6%;
+  transform: translate(-6%, -44%);
+  /*:*/
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  column-gap: 12px;
+}
+
+.float-options-buttons {
+  padding: 20px 0px 20px 0px;
+  /*size:*/
+  height: 66px;
+  width: 184px;
+  border-radius: 74px;
+  background: #fff;
+  border: 1px solid #A646DC;
+  /*heritage:*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.float-options-counter {
+  z-index: 9;
+  padding: 5px 5px 5px 5px;
+  min-height: 21px;
+  max-height: 21px;
+  min-width: 21px;
+  max-width: fit-content;
+  background: #A646DC;
+  color: white;
+  border-radius: 4px;
+  /*heritage:*/
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  /*text:*/
+  font-weight: 600;
+  font-size: 13px;
+}
+
+#disabled {
+  /*display: none;*/
+  /* visibility: hidden; */
+  pointer-events: none;
+}
+
+#disabled > .textfieldManif {
+  background-color: #dcdcdc;
+}
+
+#disabled > .textfieldManif > * {
+  color: #8f8f8f;
+}

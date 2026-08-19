@@ -1,0 +1,72 @@
+.navbar {
+  position: fixed;
+}
+
+.sidebarexpand {
+  position: fixed;
+  bottom: 0;
+  z-index: 100;
+  background: #FFFFFF;
+  border-top: 1px solid #EAECF0;
+	border-right: 1px solid #EAECF0
+}
+
+.sidebarexpand:hover {
+  overflow-y: scroll;
+}
+
+.sidebarexpand::-webkit-scrollbar {
+  width: 10px;
+}
+
+.sidebarexpand::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.sidebarexpand::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+  border: 2px solid #f1f1f1;
+}
+
+.sidebarexpand::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.pseudolink {
+  text-decoration: none;
+  text-transform: none;
+  color: #000;
+}
+
+.pseudolink:hover {
+  color: #0A58CA;
+}
+
+.drawer {
+  text-shadow: none;
+  /*height: 88.5vh;*/
+}
+
+.list-nav-link {
+  text-decoration: none;
+  color: #000000;
+}
+
+.nav-exit {
+  color: #000000;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+.avatar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+.avatarList {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}

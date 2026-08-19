@@ -1,0 +1,46 @@
+.tabs-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scroll-behavior: smooth;
+  }
+  .tabs-container:hover .scroll-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .tabs {
+    width: fit-content;
+    max-width: 100%;
+    overflow-x: hidden;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    column-gap: 12px;
+    padding: 10px 0;
+  }
+  
+  .scroll-button {
+    display: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 26px;
+    height: 26px;
+    background-color: #ffffffdb;
+    border: 1px solid purple;
+    color: purple;
+    border-radius: 50px;
+    cursor: pointer;
+  }
+  .scroll-button.left {
+    left: 0;
+  }
+  .scroll-button.right {
+    right: 0;
+  }
+  .scroll-button:hover {
+    background-color: #fffffff5;
+  }  

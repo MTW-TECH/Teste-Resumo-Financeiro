@@ -1,0 +1,33 @@
+/*não usados:*/
+.sidebar-divisory-false {
+    display: block;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    border: 1px solid #EAECF0;
+    background-color: #FEFEFE;
+    margin: 0;
+    padding: 0;
+    z-index: 8;
+    overflow: hidden;
+    width: fit-content;
+}
+
+.sidebar-divisory-false:hover {
+    background: #C9C9C9;
+    cursor: pointer;
+}
+
+.sidebar-divisory-true {
+    display: block;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: fit-content;
+    border: 1px solid #F1F1F1;
+    background-color: #FEFEFE;
+    margin: 0;
+    padding: 0;
+    z-index: 8;
+    overflow: hidden;
+}

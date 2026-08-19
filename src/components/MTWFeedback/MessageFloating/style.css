@@ -1,0 +1,72 @@
+/*float div:*/
+.main-float-top-div-shown {
+  z-index: 999999;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 50%; /* Move to the center horizontally */
+  top: 7%;
+  transform: translateX(-50%); /* Center the div */
+}
+
+.main-float-top-div-void {
+  display: none;
+}
+
+.main-float-top-div-wrapper {
+  /*layout*/
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  column-gap: 14px;
+  min-width: fit-content;
+  width: fit-content;
+  max-width: 500px;
+  /*style*/
+  padding: 20px 18px 20px 18px;
+  border-radius: 19px;
+  background: #fff;
+  border: 1px solid #a646dc;
+  color: #a646dc;
+}
+
+.main-float-top-div-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main-float-top-div-inner-download {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.main-float-top-div-inner-download-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.main-float-top-div-inner-download-link:hover {
+  text-decoration: underline;
+}
+
+.main-float-top-div-inner-download-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  size: 11px;
+  cursor: pointer;
+}
+
+.main-float-top-div-inner-download-close:hover {
+  text-decoration: underline;
+}

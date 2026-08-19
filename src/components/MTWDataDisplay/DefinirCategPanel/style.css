@@ -1,0 +1,10 @@
+.obsInput {
+    min-width: 260px;
+    max-width: 320px;
+    min-height: 100px
+}
+
+.qtyInput {
+    padding: 8px 6px 8px 6px;
+    width: 70px;
+}

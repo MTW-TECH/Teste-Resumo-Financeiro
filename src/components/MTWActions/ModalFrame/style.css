@@ -1,0 +1,22 @@
+/*
+.modalFrameBodyWrapper {
+  overflow-y: auto;
+}
+*/
+
+.modalFrameBodyWrapper::-webkit-scrollbar {
+  width: 10px; /*Set the width of the scrollbar*/
+}
+
+.modalFrameBodyWrapper::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /*Track color*/
+}
+
+.modalFrameBodyWrapper::-webkit-scrollbar-thumb {
+  background-color: #9a84aa; /*Thumb color*/
+  border-radius: 5px; /*Rounded corners for the thumb*/
+}
+
+.modalFrameBodyWrapper::-webkit-scrollbar-thumb:hover {
+  background-color: #745e84; /*Thumb color on hover*/
+}
