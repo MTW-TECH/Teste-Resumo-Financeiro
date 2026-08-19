@@ -11,7 +11,7 @@
 
 <br/>
 
-![Preview da tela Resumo Financeiro](.github/preview.png)
+![Preview da tela Resumo Financeiro](.github/preview-v2.png)
 
 <br/>
 
