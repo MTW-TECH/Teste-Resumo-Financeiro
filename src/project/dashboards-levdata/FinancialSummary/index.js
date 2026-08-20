@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  getCompanyList,
-  companySelector
-} from 'features/cadastroFeatures/Company/company.store';
+import { getCompanyList } from 'features/cadastroFeatures/Company/company.store';
+import { userdataSelector } from 'features/userFeatures/userdata.store';
 //COMPONENTS
 import StandardLayout from '../../../components/Layout/StandardLayout/StandardLayout';
 import FooterLite from '../../../components/Layout/Footer';
@@ -20,36 +18,15 @@ import { ResponsiveBar } from '@nivo/bar';
 
 function FinancialSummary() {
   const dispatch = useDispatch();
-  const { companies } = useSelector(companySelector);
-  //localStorage:
-  const [importedCompany, setImportedCompany] = useState('');
-  const [companyDisplayed, setCompanyDisplayed] = useState('');
-
-  //--------------------Retrieve current company (local storage 1) (api 1)--------------------
-  window.addEventListener('storage', () => {
-    const company = window.localStorage.getItem('CURRENT_COMPANY');
-    if (company.length && importedCompany.length) {
-      if (company !== importedCompany) {
-        setImportedCompany(company);
-      }
-    } else if (company.length && importedCompany.length === 0) {
-      setImportedCompany(company);
-    }
-  });
+  const { companySelected } = useSelector(userdataSelector);
+  const importedCompany = companySelected?.id || '';
+  const companyDisplayed = importedCompany
+    ? `${companySelected?.nome} - ${companySelected?.cnpj}`
+    : '';
 
   useEffect(() => {
     dispatch(getCompanyList());
   }, []);
-
-  useEffect(() => {
-    if (companies?.items && importedCompany?.length) {
-      let details = companies?.items.filter(
-        (row) => row.IdEmpresa === importedCompany
-      );
-      let display = `${details[0]?.Nome} - ${details[0]?.Cnpj}`;
-      setCompanyDisplayed(display);
-    }
-  }, [companies, importedCompany]);
 
   //----------------------------Cards-------------------------
   let receita = '450.000,00';

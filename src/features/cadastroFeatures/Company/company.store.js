@@ -17,7 +17,7 @@ export const getCompanyList = createAsyncThunk('api/companies', async () => {
 export const companySlice = createSlice({
   name: 'company',
   initialState: {
-    companies: [],
+    companies: { items: [] },
     isGettingCompanies: false,
     //Page's frame (navbar and first row):
     pageFrame: true
@@ -32,7 +32,10 @@ export const companySlice = createSlice({
     },
     [getCompanyList.fulfilled]: (state, action) => {
       state.isGettingCompanies = 'success';
-      state.companies = action.payload;
+      // Normaliza a resposta para `{ items: [...] }`, aceitando tanto array puro quanto `{ items }`
+      state.companies = Array.isArray(action.payload)
+        ? { items: action.payload }
+        : action.payload;
     },
     [getCompanyList.rejected]: (state) => {
       state.isGettingCompanies = 'failed';

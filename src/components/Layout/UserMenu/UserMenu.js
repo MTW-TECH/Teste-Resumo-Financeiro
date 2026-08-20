@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { Avatar } from '@mui/material';
+import { Avatar, Tooltip } from '@mui/material';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -39,9 +39,9 @@ export default function UserMenu() {
   */
   useEffect(() => {
     const companiesList = companies?.items || [];
-    if (companiesList.length > 0 && !companySelected?.IdEmpresa) {
+    if (companiesList.length > 0 && !companySelected?.id) {
       const savedId = window.localStorage.getItem('CURRENT_COMPANY');
-      const foundInStorage = companiesList.find((c) => c.IdEmpresa === savedId);
+      const foundInStorage = companiesList.find((c) => c.id === savedId);
       dispatch(recordCompanySelected(foundInStorage || companiesList[0]));
     }
   }, [companies, companySelected, dispatch]);
@@ -52,12 +52,16 @@ export default function UserMenu() {
     o evento `storage` (pras telas antigas que ainda dependem deles) em dia.
   */
   useEffect(() => {
-    if (companySelected?.IdEmpresa) {
-      window.localStorage.setItem('CURRENT_COMPANY', companySelected.IdEmpresa);
+    if (companySelected?.id) {
+      window.localStorage.setItem('CURRENT_COMPANY', companySelected.id);
       window.localStorage.setItem('COMPANY_PICKED', 'true');
       window.dispatchEvent(new Event('storage'));
     }
   }, [companySelected]);
 
-  return <Avatar src={userdata?.UserName} />;
+  return (
+    <Tooltip title={userdata?.email || ''}>
+      <Avatar src={userdata?.name} />
+    </Tooltip>
+  );
 }
