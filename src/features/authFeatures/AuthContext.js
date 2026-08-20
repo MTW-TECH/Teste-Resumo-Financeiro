@@ -12,7 +12,7 @@ import {
 } from 'amazon-cognito-identity-js';
 import { cognitoConfig } from 'features/authFeatures/cognitoConfig';
 
-const userPool = new CognitoUserPool(cognitoConfig);
+export const userPool = new CognitoUserPool(cognitoConfig);
 
 const AuthContext = createContext(null);
 

@@ -1,12 +1,9 @@
-// Dados estáticos de demonstração — o candidato deve substituir por uma API real.
-const MOCK_USER = {
-  Id: '1',
-  UserName: 'Usuário Demonstração',
-  Email: 'candidato@teste.com'
-};
+import { financialApi } from '../../services/financialApi';
 
 export const ApiGetUserData = async () => {
-  return MOCK_USER;
+  const { data } = await financialApi.get('user/me');
+
+  return data;
 };
 
 export const ApiGetUserAuthorized = async () => {
