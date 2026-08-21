@@ -43,11 +43,14 @@ const formatMonthLabel = (mes) => {
   return year ? `${label}/${year.slice(-2)}` : label;
 };
 
-const formatCurrency = (value) =>
-  Math.abs(Number(value) || 0).toLocaleString('pt-BR', {
+const formatCurrency = (value) => {
+  const num = Number(value) || 0;
+  const formatted = Math.abs(num).toLocaleString('pt-BR', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
   });
+  return num < 0 ? `-${formatted}` : formatted;
+};
 
 function FinancialSummary() {
   const dispatch = useDispatch();
@@ -101,7 +104,11 @@ function FinancialSummary() {
         {icon}
       </div>
       <h2 style={{ margin: '8px 0' }}>
-        {isCurrency ? `R$ ${value.toLocaleString()}` : value}
+        {isCurrency
+          ? value.startsWith('-')
+            ? `-R$ ${value.slice(1)}`
+            : `R$ ${value}`
+          : value}
       </h2>
       {subtitle && (
         <p
@@ -126,6 +133,18 @@ function FinancialSummary() {
     taxa: item.taxa,
     custos: item.custos
   }));
+
+  // Lucro mensal = receita - custos (custos vem como valor positivo)
+  const lucroMensal = monthlyData.map(
+    (item) => (item.receita || 0) - (item.custos || 0)
+  );
+  const barsMax = Math.max(
+    0,
+    ...monthlyData.flatMap((item) => [item.receita || 0, item.taxa || 0])
+  );
+  // Domínio único (barra + linha) para manter todos os pontos visíveis.
+  const chartMinValue = Math.min(0, ...lucroMensal);
+  const chartMaxValue = Math.max(barsMax, ...lucroMensal);
 
   //---------------------------CSS-----------------------
 
@@ -154,7 +173,11 @@ function FinancialSummary() {
         maxWidth={false}
         disableGutters
         sx={{
-          padding: isMobile ? '0 16px' : isTablet ? '0 40px' : '0 180px 0px 180px'
+          padding: isMobile
+            ? '0 16px'
+            : isTablet
+            ? '0 40px'
+            : '0 180px 0px 180px'
         }}
       >
         <ProductHeader
@@ -342,6 +365,11 @@ function FinancialSummary() {
                   data={monthlyData}
                   keys={['receita', 'taxa']}
                   indexBy="mes"
+                  valueScale={{
+                    type: 'linear',
+                    min: chartMinValue,
+                    max: chartMaxValue
+                  }}
                   margin={{ top: 20, right: 20, bottom: 50, left: 60 }}
                   padding={0.5}
                   groupMode="grouped"
@@ -372,16 +400,11 @@ function FinancialSummary() {
                     'axes',
                     'bars',
                     ({ bars, yScale }) => {
-                      // Lucro mensal aproximado (receita + custos, já que custos vem negativo)
-                      const lineData = monthlyData.map(
-                        (item) => (item.receita || 0) + (item.custos || 0)
-                      );
-
                       const points = bars
                         .filter((bar) => bar.key.includes('receita'))
                         .map((bar, index) => ({
                           x: bar.x + bar.width / 2,
-                          y: yScale(lineData[index])
+                          y: yScale(lucroMensal[index])
                         }));
 
                       return (
