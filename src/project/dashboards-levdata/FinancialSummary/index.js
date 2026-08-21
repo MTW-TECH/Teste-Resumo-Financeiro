@@ -12,7 +12,8 @@ import StandardLayout from '../../../components/Layout/StandardLayout/StandardLa
 import FooterLite from '../../../components/Layout/Footer';
 import ProductHeader from '../../../components/ProductHeader';
 //MUI
-import { Container, Box } from '@mui/material';
+import { Container, Box, useMediaQuery } from '@mui/material';
+import theme from 'theme';
 import LightbulbOutlinedIcon from '@mui/icons-material/LightbulbOutlined';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -52,6 +53,8 @@ function FinancialSummary() {
   const dispatch = useDispatch();
   const { companySelected } = useSelector(userdataSelector);
   const { finantialResume } = useSelector(finantialSelector);
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isTablet = useMediaQuery(theme.breakpoints.down('md'));
   const importedCompany = companySelected?.id || '';
   const companyDisplayed = importedCompany
     ? `${companySelected?.nome} - ${companySelected?.cnpj}`
@@ -150,7 +153,9 @@ function FinancialSummary() {
       <Container
         maxWidth={false}
         disableGutters
-        sx={{ padding: '0 180px 0px 180px' }}
+        sx={{
+          padding: isMobile ? '0 16px' : isTablet ? '0 40px' : '0 180px 0px 180px'
+        }}
       >
         <ProductHeader
           page={'financial-summary'}
@@ -169,8 +174,12 @@ function FinancialSummary() {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(5, 1fr)',
-            gap: '25px',
+            gridTemplateColumns: isMobile
+              ? '1fr'
+              : isTablet
+              ? 'repeat(2, 1fr)'
+              : 'repeat(5, 1fr)',
+            gap: isMobile ? '15px' : '25px',
             margin: '20px 0px',
             width: '100%'
           }}
@@ -252,6 +261,7 @@ function FinancialSummary() {
               <div
                 style={{
                   display: 'flex',
+                  flexWrap: 'wrap',
                   alignItems: 'center',
                   gap: '18px',
                   fontSize: '14px',
@@ -316,8 +326,8 @@ function FinancialSummary() {
             {/* GRÁFICO */}
             <div
               style={{
-                height: '420px',
-                padding: '20px',
+                height: isMobile ? '280px' : '420px',
+                padding: isMobile ? '10px' : '20px',
                 position: 'relative'
               }}
             >
@@ -407,7 +417,7 @@ function FinancialSummary() {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: '1fr 1fr',
+              gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
               gap: '20px'
             }}
           >
@@ -566,7 +576,7 @@ function FinancialSummary() {
         <Box
           sx={{
             display: 'grid',
-            gridTemplateColumns: '2fr 1fr',
+            gridTemplateColumns: isTablet ? '1fr' : '2fr 1fr',
             gap: '20px',
             margin: '20px 0px'
           }}
