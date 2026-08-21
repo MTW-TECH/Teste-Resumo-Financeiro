@@ -28,7 +28,6 @@ import LogoLevdata from '../../../assets/logo_levdata.png';
 import LogoNavTax from '../../../assets/logo_navtax.png';
 import UserMenu from '../UserMenu/UserMenu';
 import HeaderToggleLang from '../HeaderToggleLang';
-import ColoredFetching from 'components/MTWFeedback/ColoredFetching';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -78,12 +77,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './style.css';
 import '../../../styles/index.css';
 import theme from 'theme';
-import {
-  Navbar,
-  Avatar,
-  UserName,
-  CompanyName
-} from '../../../styledComponentsStyles';
+import { Navbar, Avatar, CompanyName } from '../../../styledComponentsStyles';
 import styledtheme from '../../../styledThemeOn';
 
 function PortalFrame(props) {
@@ -305,6 +299,13 @@ function PortalFrame(props) {
     flexDirection: 'column',
     alignItems: 'flex-start'
   };
+
+  const userName =
+    userdata?.name ||
+    userdata?.UserName ||
+    userdata?.username ||
+    userdata?.email ||
+    'Usuário';
 
   const logoStyles = {
     display: 'flex',
@@ -1021,26 +1022,16 @@ function PortalFrame(props) {
             </div>
             <div className="avatar">
               <UserMenu />
-              {userdata?.UserName ? (
-                <div style={avatarListStyles}>
-                  <div>
-                    <UserName styledtheme={styledtheme}>
-                      {userdata.UserName}
-                    </UserName>
-                  </div>
+              <div style={avatarListStyles}>
+                <span>{userName}</span>
+                {userdata?.Cliente && (
                   <div>
                     <CompanyName styledtheme={styledtheme}>
                       {userdata.Cliente}
                     </CompanyName>
                   </div>
-                </div>
-              ) : (
-                <ColoredFetching
-                  noMargin
-                  small
-                  color={theme.palette.primary.main}
-                />
-              )}
+                )}
+              </div>
             </div>
           </Toolbar>
         </AppBar>
@@ -1133,26 +1124,16 @@ function PortalFrame(props) {
                 )}
                 <Avatar>
                   <UserMenu />
-                  {userdata?.UserName ? (
-                    <div style={avatarListStyles}>
-                      <div>
-                        <UserName styledtheme={styledtheme}>
-                          {userdata.UserName}
-                        </UserName>
-                      </div>
+                  <div style={avatarListStyles}>
+                    <span>{userName}</span>
+                    {userdata?.Cliente && (
                       <div>
                         <CompanyName styledtheme={styledtheme}>
                           {userdata.Cliente}
                         </CompanyName>
                       </div>
-                    </div>
-                  ) : (
-                    <ColoredFetching
-                      noMargin
-                      small
-                      color={theme.palette.primary.main}
-                    />
-                  )}
+                    )}
+                  </div>
                 </Avatar>
               </div>
             </Navbar>
