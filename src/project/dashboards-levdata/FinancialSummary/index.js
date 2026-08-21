@@ -3,6 +3,10 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCompanyList } from 'features/cadastroFeatures/Company/company.store';
 import { userdataSelector } from 'features/userFeatures/userdata.store';
+import {
+  getFinantialResume,
+  finantialSelector
+} from 'features/finantial/finantial.store';
 //COMPONENTS
 import StandardLayout from '../../../components/Layout/StandardLayout/StandardLayout';
 import FooterLite from '../../../components/Layout/Footer';
@@ -16,9 +20,38 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 //Nivo
 import { ResponsiveBar } from '@nivo/bar';
 
+const MONTH_LABELS = [
+  'Jan',
+  'Fev',
+  'Mar',
+  'Abr',
+  'Mai',
+  'Jun',
+  'Jul',
+  'Ago',
+  'Set',
+  'Out',
+  'Nov',
+  'Dez'
+];
+
+// Converte '2026-08' em 'Ago/26'
+const formatMonthLabel = (mes) => {
+  const [year, month] = (mes || '').split('-');
+  const label = MONTH_LABELS[Number(month) - 1] || mes;
+  return year ? `${label}/${year.slice(-2)}` : label;
+};
+
+const formatCurrency = (value) =>
+  Math.abs(Number(value) || 0).toLocaleString('pt-BR', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
+
 function FinancialSummary() {
   const dispatch = useDispatch();
   const { companySelected } = useSelector(userdataSelector);
+  const { finantialResume } = useSelector(finantialSelector);
   const importedCompany = companySelected?.id || '';
   const companyDisplayed = importedCompany
     ? `${companySelected?.nome} - ${companySelected?.cnpj}`
@@ -26,14 +59,19 @@ function FinancialSummary() {
 
   useEffect(() => {
     dispatch(getCompanyList());
+    dispatch(getFinantialResume());
   }, []);
 
   //----------------------------Cards-------------------------
-  let receita = '450.000,00';
-  let custos = '245.000,00';
-  let taxas = '65.000,00';
-  let lucro = '65.000,00';
-  let lajida = '30.000,00';
+  const receita = formatCurrency(finantialResume?.receita);
+  const custos = formatCurrency(finantialResume?.custos);
+  const taxas = formatCurrency(finantialResume?.taxas);
+  const lucro = formatCurrency(
+    finantialResume?.lucro_liquido ?? finantialResume?.lucro
+  );
+  const lajida = formatCurrency(
+    finantialResume?.lajida ?? finantialResume?.ebitda
+  );
 
   const Card = ({
     title,
@@ -79,68 +117,12 @@ function FinancialSummary() {
   );
 
   //---------------------------Gráfico-------------------
-  const monthlyData = [
-    {
-      mes: 'Jan',
-      receita: 58000,
-      taxa: 32000
-    },
-    {
-      mes: 'Fev',
-      receita: 70000,
-      taxa: 38000
-    },
-    {
-      mes: 'Mar',
-      receita: 50000,
-      taxa: 25000
-    },
-    {
-      mes: 'Abr',
-      receita: 65000,
-      taxa: 32000
-    },
-    {
-      mes: 'Mai',
-      receita: 70000,
-      taxa: 38000
-    },
-    {
-      mes: 'Jun',
-      receita: 47000,
-      taxa: 24000
-    },
-    {
-      mes: 'Jul',
-      receita: 60000,
-      taxa: 32000
-    },
-    {
-      mes: 'Ago',
-      receita: 50000,
-      taxa: 25000
-    },
-    {
-      mes: 'Set',
-      receita: 60000,
-      taxa: 32000
-    },
-    {
-      mes: 'Out',
-      receita: 45000,
-      taxa: 22000
-    },
-    {
-      mes: 'Nov',
-      receita: 70000,
-      taxa: 38000
-    },
-    {
-      mes: 'Dez',
-      receita: 60000,
-      taxa: 32000
-    }
-  ];
+  const monthlyData = (finantialResume?.montlyData || []).map((item) => ({
+    mes: formatMonthLabel(item.mes),
+    receita: item.receita,
+    taxa: item.taxa,
+    custos: item.custos
+  }));
 
   //---------------------------CSS-----------------------
 
@@ -380,10 +362,10 @@ function FinancialSummary() {
                     'axes',
                     'bars',
                     ({ bars, yScale }) => {
-                      const lineData = [
-                        37000, 43000, 30000, 40000, 43000, 29000, 37000, 31000,
-                        37000, 27000, 43000, 38000
-                      ];
+                      // Lucro mensal aproximado (receita + custos, já que custos vem negativo)
+                      const lineData = monthlyData.map(
+                        (item) => (item.receita || 0) + (item.custos || 0)
+                      );
 
                       const points = bars
                         .filter((bar) => bar.key.includes('receita'))
