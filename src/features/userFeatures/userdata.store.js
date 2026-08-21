@@ -44,16 +44,35 @@ export const recordUserAuthSession = createAction(
   })
 );
 
-export const getUserData = createAsyncThunk('api/userdata', async () => {
-  let response = await ApiGetUserData();
-  return response;
-});
+export const getUserData = createAsyncThunk(
+  'api/userdata',
+  async () => {
+    let response = await ApiGetUserData();
+    return response;
+  },
+  {
+    // Evita chamadas duplicadas quando vários componentes (ex: PortalFrame e
+    // UserMenu) montam ao mesmo tempo e disparam a mesma requisição.
+    condition: (_, { getState }) => {
+      const { isLoadingUser, userdata } = getState().userData;
+      if (isLoadingUser === 'loading') return false;
+      if (userdata && Object.keys(userdata).length) return false;
+    }
+  }
+);
 
 export const getUserAuthorized = createAsyncThunk(
   'api/userauth',
   async (id) => {
     let response = await ApiGetUserAuthorized(id);
     return response;
+  },
+  {
+    condition: (_, { getState }) => {
+      const { isLoadingAuth, userauth } = getState().userData;
+      if (isLoadingAuth === 'loading') return false;
+      if (userauth && Object.keys(userauth).length) return false;
+    }
   }
 );
 

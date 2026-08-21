@@ -6,6 +6,13 @@ export const getFinantialResume = createAsyncThunk(
   async () => {
     let response = await ApiGetFinantialResume();
     return response;
+  },
+  {
+    // Evita chamadas duplicadas (ex: React.StrictMode double-invoke em dev)
+    condition: (_, { getState }) => {
+      const { isLoadingFinantial } = getState().finantial;
+      if (isLoadingFinantial === 'loading') return false;
+    }
   }
 );
 

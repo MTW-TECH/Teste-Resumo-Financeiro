@@ -9,10 +9,22 @@ export const getPageFrame = createAsyncThunk('pageframe', async ({ bool }) => {
   }
 });
 
-export const getCompanyList = createAsyncThunk('api/companies', async () => {
-  let response = await ApiGetCompany();
-  return response;
-});
+export const getCompanyList = createAsyncThunk(
+  'api/companies',
+  async () => {
+    let response = await ApiGetCompany();
+    return response;
+  },
+  {
+    // Evita chamadas duplicadas quando vários componentes (ex: UserMenu e
+    // FinancialSummary) montam ao mesmo tempo e disparam a mesma requisição.
+    condition: (_, { getState }) => {
+      const { isGettingCompanies, companies } = getState().company;
+      if (isGettingCompanies === 'loading') return false;
+      if (companies?.items?.length) return false;
+    }
+  }
+);
 
 export const companySlice = createSlice({
   name: 'company',
